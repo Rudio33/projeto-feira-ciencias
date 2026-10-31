@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Terminal</title>
+  <title>Simulador de Lançamento</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,13 +28,58 @@
 
   </div>
 
-  <div id="terminal">
-    <div id="saida">Bem-vindo! Digite "ajuda".</div>
-    <div>
-      <span>Usuario001 :</span>
-      <input id="cmd" autocomplete="off" autofocus>
+<!-- Simulador -->
+  <section id="simulador">
+    <div class="sim-wrap">
+      <h2>Falcon 9: decolagem e pouso</h2>
+      <p class="dica">Clique em <b>Armar</b> e depois em <b>Lançar</b>. Veja o primeiro estágio voltar e pousar de pé.</p>
+
+      <div id="painel">
+        <div id="cena">
+          <canvas id="tela" width="520" height="600"></canvas>
+          <dl id="hud">
+            <div><dt>Tempo</dt><dd id="tTempo">T+ 00:00</dd></div>
+            <div><dt>Altitude</dt><dd id="tAlt">0,0 km</dd></div>
+            <div><dt>Velocidade</dt><dd id="tVel">0 m/s</dd></div>
+          </dl>
+          <div id="aviso"></div>
+          <div id="contagemGrande"></div>
+        </div>
+
+        <div id="controles">
+          <div class="grupo">
+            <h3>Controle da missão</h3>
+            <ul id="checklist">
+              <li>Sistemas de foguete</li>
+              <li>Clima</li>
+              <li>Faixa de lançamento</li>
+              <li>Computador de voo</li>
+              <li>Diretor de lançamento</li>
+            </ul>
+            <div class="botoes">
+              <button id="btnArmar" class="botao">Armar</button>
+              <button id="btnLancar" class="botao lancar">Lançar</button>
+              <button id="btnReiniciar" class="botao sec">Reiniciar</button>
+            </div>
+            <p id="status"></p>
+          </div>
+
+          <div class="grupo">
+            <h3>Fases do voo</h3>
+            <ol id="fases">
+              <li data-fase="decolagem"><b>Decolagem</b><span>Nove motores Merlin acesos empurram o foguete.</span></li>
+              <li data-fase="maxq"><b>Max-Q</b><span>Momento de maior pressão do ar sobre o foguete.</span></li>
+              <li data-fase="separacao"><b>Separação</b><span>O 1º estágio se solta e o 2º segue para a órbita.</span></li>
+              <li data-fase="boostback"><b>Boostback</b><span>O 1º estágio dá meia-volta e retorna.</span></li>
+              <li data-fase="carenagem"><b>Carenagem</b><span>A proteção se abre e libera o satélite.</span></li>
+              <li data-fase="pouso"><b>Pouso</b><span>Pernas abertas e pouso de pé na plataforma.</span></li>
+              <li data-fase="orbita"><b>Órbita</b><span>O satélite é liberado no espaço.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
