@@ -224,3 +224,311 @@ header {
     #hud { flex-wrap: wrap; right: 12px; }
     #contagemGrande { font-size: 90px; top: 130px; }
 }
+
+/* ===== Botões para alternar entre os simuladores ===== */
+.modos { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 28px; }
+#simulador .modo {
+    padding: 10px 22px;
+    border: 1px solid #3b5a94;
+    border-radius: 999px;
+    background: transparent;
+    color: #bcd0f2;
+    font: 600 15px "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+#simulador .modo:hover { transform: translateY(-2px); }
+#simulador .modo.ativo { background: #2d8cff; border-color: #2d8cff; color: #fff; }
+#simulador .modo:focus-visible { outline: 3px solid #7cc0ff; outline-offset: 2px; }
+
+/* ===== Simulador Apollo (escopado em #lua, dentro do #simulador) ===== */
+#lua {
+    --ouro: #f2c14e;
+    --prata: #c9d1e0;
+    --linha: #2a3550;
+}
+#lua *, #lua *::before, #lua *::after { box-sizing: border-box; }
+
+.lua-painel { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; justify-content: center; }
+
+/* Cena */
+.lua-cena { position: relative; width: 520px; max-width: 100%; line-height: 0; }
+#luaTela {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    background: #000;
+    border: 1px solid var(--linha);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+#luaHud { position: absolute; top: 12px; left: 12px; display: flex; gap: 8px; margin: 0; line-height: 1.2; }
+#luaHud div {
+    background: rgba(8, 11, 20, 0.7);
+    border: 1px solid var(--linha);
+    border-radius: 8px;
+    padding: 6px 11px;
+}
+#luaHud dt { font-size: 11px; color: #8d99b5; margin: 0; }
+#luaHud dd { margin: 2px 0 0; font: 600 16px "Courier New", monospace; color: #fff; font-variant-numeric: tabular-nums; }
+
+#luaAviso {
+    position: absolute;
+    left: 50%;
+    top: 74px;
+    transform: translate(-50%, -8px);
+    background: var(--ouro);
+    color: #1a1405;
+    border-radius: 999px;
+    padding: 9px 20px;
+    font: 600 15px "Segoe UI", Arial, sans-serif;
+    line-height: 1.3;
+    white-space: nowrap;
+    max-width: 94%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: opacity 0.35s, transform 0.35s;
+    pointer-events: none;
+}
+#luaAviso.on { opacity: 1; transform: translate(-50%, 0); }
+
+#luaContagem {
+    position: absolute;
+    left: 0; right: 0; top: 150px;
+    text-align: center;
+    font: 700 120px "Courier New", monospace;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(242, 193, 78, 0.8);
+    pointer-events: none;
+}
+#luaContagem.pop { animation: luaPop 0.9s ease-out; }
+@keyframes luaPop { from { transform: scale(1.5); opacity: 1; } to { transform: scale(1); opacity: 0.8; } }
+
+/* Painéis */
+#lua .controles { width: 400px; max-width: 100%; display: flex; flex-direction: column; gap: 16px; }
+#lua .grupo {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+    padding: 18px 20px;
+}
+#lua .grupo h3 { font-size: 17px; color: var(--ouro); margin: 0 0 14px; }
+
+/* Verificação */
+#luaChecklist { list-style: none; margin: 0 0 16px; padding: 0; }
+#luaChecklist li { color: #6f7b97; padding: 4px 0 4px 28px; position: relative; font-size: 15px; transition: color 0.3s; }
+#luaChecklist li::before {
+    content: "";
+    position: absolute;
+    left: 2px; top: 7px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #3b4a6e;
+    transition: all 0.3s;
+}
+#luaChecklist li.ok { color: #eef2fb; }
+#luaChecklist li.ok::before { background: #2fd27a; border-color: #2fd27a; }
+
+/* Botões */
+#lua .botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+#lua .lbtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font: 600 16px "Segoe UI", Arial, sans-serif;
+    color: var(--prata);
+    cursor: pointer;
+    background: #26314d;
+    transition: transform 0.15s, filter 0.15s;
+}
+#lua .lbtn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
+#lua .lbtn.lancar { background: var(--ouro); color: #1a1405; }
+#lua .lbtn.sec { background: transparent; border: 1px solid var(--linha); }
+#lua .lbtn:disabled { background: #151c2e; color: #55617f; cursor: not-allowed; }
+#lua .lbtn.sec:disabled { background: transparent; border-color: #1c2640; }
+#lua button:focus-visible { outline: 3px solid var(--ouro); outline-offset: 2px; }
+#luaStatus { margin: 14px 0 0; color: #a9c4ff; font-size: 15px; }
+
+/* Fases da missão */
+#luaFases { list-style: none; margin: 0; padding: 0; }
+#luaFases li { position: relative; padding: 0 0 14px 30px; }
+#luaFases li:last-child { padding-bottom: 0; }
+#luaFases li::before {
+    content: "";
+    position: absolute;
+    left: 3px; top: 3px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #121a2e;
+    border: 2px solid #3b4a6e;
+    transition: all 0.3s;
+}
+#luaFases li::after {
+    content: "";
+    position: absolute;
+    left: 8px; top: 20px; bottom: 0;
+    width: 2px;
+    background: #1f2a47;
+}
+#luaFases li:last-child::after { display: none; }
+#luaFases b { display: block; color: #6f7b97; font-size: 15px; transition: color 0.3s; }
+#luaFases span { display: block; color: #4d5a78; font-size: 13px; line-height: 1.4; margin-top: 2px; }
+#luaFases li.feito b { color: #f4f7ff; }
+#luaFases li.feito span { color: #9aa6c0; }
+#luaFases li.feito::before { background: var(--ouro); border-color: var(--ouro); }
+#luaFases li.feito::after { background: var(--ouro); opacity: 0.4; }
+#luaFases li.atual::before { box-shadow: 0 0 0 4px rgba(242, 193, 78, 0.25); }
+
+@media (prefers-reduced-motion: reduce) {
+    #luaContagem.pop { animation: none; }
+}
+@media (max-width: 560px) {
+    #luaHud { flex-wrap: wrap; right: 12px; }
+    #luaContagem { font-size: 90px; top: 130px; }
+}
+
+/* ===== Conteúdo histórico: não altera o simulador ===== */
+html {
+  scroll-behavior: smooth;
+}
+#conteudo1::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,5,16,.86), rgba(0,10,25,.40) 60%, rgba(0,0,0,.08));
+  pointer-events: none;
+}
+#texto1 {
+  z-index: 2;
+  width: min(690px, 90%);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+#Titulo1 {
+  font-size: clamp(34px, 4.2vw, 62px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+}
+#texto1 p {
+  max-width: 560px;
+  color: #d3e3f8;
+}
+.hero-etiqueta, .historia-etiqueta {
+  display: inline-block;
+  color: #68b9ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+.hero-link, .historia-final a {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 13px 22px;
+  border: 1px solid #439ef5;
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(20,90,160,.25);
+  text-decoration: none;
+  font-weight: 700;
+}
+.hero-link:hover, .historia-final a:hover {
+  background: #1465b5;
+}
+#historia {
+  background: #050b18;
+  color: #edf4ff;
+  padding: 90px 24px 75px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.historia-intro {
+  max-width: 850px;
+  margin: 0 auto 70px;
+  text-align: center;
+}
+.historia-intro h2 {
+  font-size: clamp(29px, 3vw, 44px);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.historia-intro p {
+  color: #a9b9d2;
+  font-size: 17px;
+  line-height: 1.7;
+}
+.historia-linha {
+  max-width: 1100px;
+  margin: auto;
+}
+.marco {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  padding: 42px 0;
+  border-bottom: 1px solid #1b304f;
+}
+.marco:nth-child(even) {
+  flex-direction: row-reverse;
+}
+.marco-imagem, .marco-texto {
+  flex: 1;
+  min-width: 0;
+}
+.marco-imagem {
+  display: block;
+  width: 50%;
+  height: 310px;
+  object-fit: cover;
+  background: #0b1c38;
+  border: 1px solid #234367;
+  border-radius: 12px;
+}
+.marco-ano {
+  display: inline-block;
+  color: #63b6ff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.marco-texto h3 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.marco-texto p {
+  color: #afc1dc;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.historia-final {
+  text-align: center;
+  margin: 70px auto 0;
+}
+.historia-final p {
+  color: #b9cce6;
+  font-size: 18px;
+}
+@media (max-width: 720px) {
+#conteudo1 {
+  height: 550px;
+}
+#texto1 {
+  margin-left: 16px;
+  padding: 14px;
+}
+#historia {
+  padding: 65px 20px;
+}
+.marco, .marco:nth-child(even) {
+  flex-direction: column;
+  gap: 24px;
+  align-items: stretch;
+}
+.marco-imagem {
+  flex: none;
+  width: 100%;
+  height: 250px;
+}
+}

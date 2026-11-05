@@ -12,26 +12,85 @@
   </header>
 
   <div id="conteudo1">
-
-    <img src="img1.jpg" id="contImg1">
-
+    <img src="img1.jpg" id="contImg1" alt="A Terra vista do espaço">
     <div id="texto1">
-      <h2 id="Titulo1">Exemplo</h2>
-
-      <p>
-        Having traveled more than 2.2 billion miles since it launched
-        on Oct. 16, 2021, NASA’s Lucy is the first spacecraft to enter
-        a region of primitive solar-system bodies known as the Jupiter
-        Trojan asteroids.
-      </p>
+      <span class="hero-etiqueta">EXPLORAÇÃO ESPACIAL</span>
+      <h1 id="Titulo1">A trajetória dos foguetes até os dias de hoje</h1>
+      <p>Do primeiro satélite artificial às missões modernas, descubra como os foguetes transformaram nossa maneira de explorar o espaço.</p>
+      <a class="hero-link" href="#historia">Explorar a história ↓</a>
     </div>
-
   </div>
 
-<!-- Simulador -->
+  <section id="historia">
+    <div class="historia-intro">
+      <span class="historia-etiqueta">UMA JORNADA PELO TEMPO</span>
+      <h2>Da corrida espacial à era dos foguetes reutilizáveis</h2>
+      <p>Cada lançamento abriu caminho para novas descobertas. Conheça alguns dos marcos que mudaram a exploração espacial.</p>
+    </div>
+
+    <div class="historia-linha">
+      <article class="marco">
+        <img class="marco-imagem" src="img/sputnik.jpg" alt="Satélite Sputnik 1" loading="lazy">
+        <div class="marco-texto">
+          <span class="marco-ano">1957</span>
+          <h3>Sputnik 1: o começo da era espacial</h3>
+          <p>Lançado pela União Soviética, o Sputnik 1 se tornou o primeiro satélite artificial a orbitar a Terra. Seu lançamento marcou o início da corrida espacial e mostrou que era possível colocar objetos em órbita.</p>
+        </div>
+      </article>
+
+      <article class="marco">
+        <img class="marco-imagem" src="img/saturn-v.jpg" alt="Foguete Saturn V da missão Apollo" loading="lazy">
+        <div class="marco-texto">
+          <span class="marco-ano">1969</span>
+          <h3>Saturn V: a humanidade chega à Lua</h3>
+          <p>O gigantesco Saturn V levou os astronautas da missão Apollo 11 rumo à Lua. Em julho de 1969, Neil Armstrong e Buzz Aldrin caminharam pela superfície lunar, enquanto Michael Collins permaneceu em órbita.</p>
+        </div>
+      </article>
+
+      <article class="marco">
+        <img class="marco-imagem" src="img/onibus-espacial.jpg" alt="Ônibus espacial em lançamento" loading="lazy">
+        <div class="marco-texto">
+          <span class="marco-ano">1981–2011</span>
+          <h3>Ônibus espacial: uma nova forma de viajar</h3>
+          <p>O programa Space Shuttle utilizou orbitadores que podiam retornar à Terra e voar novamente. Suas missões ajudaram a colocar satélites em órbita, construir a Estação Espacial Internacional e realizar pesquisas científicas.</p>
+        </div>
+      </article>
+
+      <article class="marco">
+        <img class="marco-imagem" src="img/falcon9.jpg" alt="Foguete Falcon 9 da SpaceX" loading="lazy">
+        <div class="marco-texto">
+          <span class="marco-ano">2010–ATUALIDADE</span>
+          <h3>Falcon 9: a revolução da reutilização</h3>
+          <p>O Falcon 9 realizou seu primeiro voo em 2010. Seu primeiro estágio foi projetado para voltar e pousar após o lançamento, permitindo reutilizações e mudando a economia dos voos espaciais.</p>
+        </div>
+      </article>
+
+      <article class="marco">
+        <img class="marco-imagem" src="img/starlink.jpg" alt="Satélites da rede Starlink em órbita" loading="lazy">
+        <div class="marco-texto">
+          <span class="marco-ano">2019–ATUALIDADE</span>
+          <h3>Starlink: satélites conectando o planeta</h3>
+          <p>Os foguetes Falcon 9 também transportam satélites Starlink, que formam uma constelação destinada a fornecer acesso à internet. É um exemplo de como os lançamentos espaciais passaram a fazer parte do cotidiano.</p>
+        </div>
+      </article>
+    </div>
+    <div class="historia-final">
+      <p>Agora que você conhece essa trajetória, experimente como funciona um lançamento.</p>
+      <a href="#simulador">Ir para o simulador ↓</a>
+    </div>
+  </section>
+
+  <!-- Simulador: Satélites (Falcon 9) e Lua (Apollo) -->
   <section id="simulador">
     <div class="sim-wrap">
-      <h2>Falcon 9: decolagem e pouso</h2>
+      <h2>Simulador de lançamento</h2>
+
+      <div class="modos">
+        <button id="modoSat" class="modo ativo" type="button" aria-pressed="true">Satélites (Falcon 9)</button>
+        <button id="modoLua" class="modo" type="button" aria-pressed="false">Viagem à Lua (Apollo)</button>
+      </div>
+
+      <div id="modoSatelite">
       <p class="dica">Clique em <b>Armar</b> e depois em <b>Lançar</b>. Veja o primeiro estágio voltar e pousar de pé.</p>
 
       <div id="painel">
@@ -77,6 +136,55 @@
             </ol>
           </div>
         </div>
+      </div>
+      </div>
+
+      <div id="lua" hidden>
+      <p class="dica">Clique em <b>Armar</b> e depois em <b>Lançar</b>. Acompanhe o Saturn V até o espaço, a viagem até a Lua e o pouso do módulo lunar. A viagem real dura cerca de 3 dias; aqui o tempo é acelerado.</p>
+
+      <div class="lua-painel">
+        <div class="lua-cena">
+          <canvas id="luaTela" width="520" height="600"></canvas>
+          <dl id="luaHud">
+            <div><dt>Tempo</dt><dd id="lTempo">T+ 00:00</dd></div>
+            <div><dt>Altitude</dt><dd id="lAlt">0,0 km</dd></div>
+            <div><dt>Velocidade</dt><dd id="lVel">0 m/s</dd></div>
+          </dl>
+          <div id="luaAviso"></div>
+          <div id="luaContagem"></div>
+        </div>
+
+        <div class="controles">
+          <div class="grupo">
+            <h3>Controle da missão</h3>
+            <ul id="luaChecklist">
+              <li>Sistemas do foguete</li>
+              <li>Clima</li>
+              <li>Plataforma de lançamento</li>
+              <li>Computador de guiagem</li>
+              <li>Diretor de voo</li>
+            </ul>
+            <div class="botoes">
+              <button id="luaArmar" class="lbtn">Armar</button>
+              <button id="luaLancar" class="lbtn lancar">Lançar</button>
+              <button id="luaReiniciar" class="lbtn sec">Reiniciar</button>
+            </div>
+            <p id="luaStatus"></p>
+          </div>
+
+          <div class="grupo">
+            <h3>Fases da missão</h3>
+            <ol id="luaFases">
+              <li data-fase="decolagem"><b>Decolagem</b><span>Cinco motores F-1 acendem e o Saturn V sobe.</span></li>
+              <li data-fase="maxq"><b>Max-Q</b><span>Momento de maior pressão do ar sobre o foguete.</span></li>
+              <li data-fase="separacao"><b>Separação</b><span>Os estágios vazios se soltam, um a um.</span></li>
+              <li data-fase="translunar"><b>Viagem à Lua</b><span>O motor do último estágio lança a nave rumo à Lua.</span></li>
+              <li data-fase="descida"><b>Descida</b><span>O módulo lunar desce e freia com seu motor.</span></li>
+              <li data-fase="pouso"><b>Alunissagem</b><span>Pouso suave e bandeira fincada na Lua.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>
